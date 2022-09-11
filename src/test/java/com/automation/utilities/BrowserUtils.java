@@ -1,5 +1,6 @@
 package com.automation.utilities;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -7,13 +8,66 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class BrowserUtils {
 
+    /**
+     * Captures a screenshot of a specific element
+     * @param targetElement
+     */
+    public static void captureScreenOfSpecificElement(WebElement targetElement)
+    {
+        File screenshot = ((TakesScreenshot)Driver.get()).getScreenshotAs(OutputType.FILE);
+        BufferedImage fullImg = null;
+        try {
+            fullImg = ImageIO.read(screenshot);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        // Get the location of element on the page
+        Point point = targetElement.getLocation();
+
+        // Get width and height of the element
+        int eleWidth = targetElement.getSize().getWidth();
+        int eleHeight = targetElement.getSize().getHeight();
+
+        // Crop the entire page screenshot to get only element screenshot
+        BufferedImage eleScreenshot = fullImg.getSubimage(point.getX(), point.getY(), eleWidth, eleHeight);
+        try {
+            ImageIO.write(eleScreenshot, "png", screenshot);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // names screenshot
+        LocalDateTime myDateObj = LocalDateTime.now();
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String formattedDate = myDateObj.format(myFormatObj);
+
+        // Copy the element screenshot to disk
+        try {
+            FileUtils.copyFile(screenshot, new File("screenshots/"+ formattedDate + "_test.jpeg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /*
+    * generates and returns a random integer
+    * @param range
+    *
+     */
     public static Integer generateRandomNumber(int range){
         int num = (int) (Math.random() * range);
         return num;

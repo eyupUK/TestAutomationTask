@@ -10,6 +10,8 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
 import org.testng.asserts.SoftAssert;
 
+import java.io.IOException;
+
 import static com.automation.utilities.BrowserUtils.waitFor;
 import static org.junit.Assert.assertEquals;
 
@@ -98,7 +100,7 @@ public class BookRoomStepDefs {
         assertEquals("Verify that the rate is displayed correctly! ", expectedRate, actualRate);
 
         int actualExtraServices = createBookingPage.getExtraServices();
-        assertEquals("Verify that the total amount of extra services is displayed correctly", expectedExtraServices, actualExtraServices);
+        softAssertion.assertEquals(expectedExtraServices, actualExtraServices,"Verify that the total amount of extra services is displayed correctly");
 
         int actualRoomsPrice = createBookingPage.getRoomsPrice();
         expectedTotal = actualRoomsPrice + actualExtraServices;
@@ -145,7 +147,7 @@ public class BookRoomStepDefs {
     }
 
     @Then("verify booking complete message {string}")
-    public void verify_booking_complete_message(String expectedMessage) {
+    public void verify_booking_complete_message(String expectedMessage){
         String actualMessage = bookingCompletedPage.getSuccessMessage();
         assertEquals(expectedMessage, actualMessage);
     }

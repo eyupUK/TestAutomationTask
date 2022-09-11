@@ -37,7 +37,6 @@ public class AddOnsPage extends BasePage{
 
         int range = inputNumberAddOnsList.size();
         int temp = range;
-        System.out.println("range = " + range);
 
         // selects add-ons
         int totalExtraServices = 0;

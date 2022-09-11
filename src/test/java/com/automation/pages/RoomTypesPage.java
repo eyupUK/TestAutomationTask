@@ -23,8 +23,8 @@ public class RoomTypesPage extends BasePage{
     @FindBy(xpath = "//h2[contains(text(),'Deluxe Appartment')]")
     public WebElement textDeluxeApartment;
 
-    @FindBy(xpath = "//input[@value='Book now !']")
-    public WebElement buttonBookNow;
+    @FindBy(xpath = "//*[@id='new_form_period']/a[2]")
+    public WebElement buttonNext12Days;
 
     @FindBy(xpath = "//input[@name='commit']")
     public WebElement buttonSearch;
@@ -43,10 +43,16 @@ public class RoomTypesPage extends BasePage{
 
     public static String date;
 
+
     // scrolls down to display a specific element
     // if it could NOT find the element, then finds new valid date and selects it, then goes to the element
     public String scrollDownToThe(String elementText){
-        driver.switchTo().frame(0);
+        try{
+            driver.switchTo().frame(0);
+        }
+        catch(Exception exe){
+
+        }
         waitFor(1);
         String dynamicXPath = "//h2[contains(text(),'"+elementText+"')]";
         By roomTypeTextLocator = By.xpath(dynamicXPath);
@@ -56,7 +62,10 @@ public class RoomTypesPage extends BasePage{
             js.executeScript("arguments[0].scrollIntoView();", textDeluxeApartment);
         }
         catch(Exception e){
-            driver.findElement(By.xpath("//a[@class='text-center']")).click();  //   // //a[contains(text(),'Check availability calendar')]
+            try{
+                driver.findElement(By.xpath("//a[@class='text-center']")).click();  //   // //a[contains(text(),'Check availability calendar')]
+            }
+            catch(Exception exc){}
             waitFor(1);
             List<WebElement> deluxeTimeBoxesList = driver.findElements(By.xpath("//div[2]/div/div/div[@class='list-group']/a[2]/b"));
             List<String> list = getElementsText(deluxeTimeBoxesList);
@@ -74,7 +83,15 @@ public class RoomTypesPage extends BasePage{
                 }
             }
             waitFor(1);
-            buttonSearch.click();
+
+            try{
+                buttonSearch.click();
+            }
+            catch (Exception ex){
+                buttonNext12Days.click();
+                waitFor(1);
+                scrollDownToThe(elementText);
+            }
         }
         return elementText;
     }

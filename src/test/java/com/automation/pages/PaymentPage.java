@@ -1,6 +1,7 @@
 package com.automation.pages;
 
 
+import com.automation.utilities.ConfigurationReader;
 import com.github.javafaker.Faker;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -35,11 +36,11 @@ public class PaymentPage extends BasePage{
     @FindBy(css = "button[type='submit']")
     public WebElement buttonPay;
 
-
+    String creditCardNumberVisa = ConfigurationReader.get("creditCardNumberVisa");
 
     //
     public void setCardInfo(){
-        cardNumber.sendKeys("4716562078533227");
+        cardNumber.sendKeys(creditCardNumberVisa);
         waitFor(1);
         Select select = new Select(cardBrand);
         select.getOptions().get(1).click();
