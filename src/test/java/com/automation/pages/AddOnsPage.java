@@ -1,0 +1,76 @@
+package com.automation.pages;
+
+import com.automation.utilities.Driver;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.List;
+
+import static com.automation.utilities.BrowserUtils.*;
+
+
+public class AddOnsPage extends BasePage{
+
+    WebDriver driver = Driver.get();
+
+
+    public By inputNumberAddOnsLocator = By.xpath("//input[@type='number']");
+    public By pricesAddOnsLocator = By.xpath("//input[@type='number']//parent::div/preceding-sibling::div[1]");
+
+    public By namesAndPricesAddOnsLocator = By.cssSelector(".form-control-static");
+
+
+    @FindBy(css = "body > div:nth-child(1) > form:nth-child(7) > div:nth-child(21) > div:nth-child(1) > span:nth-child(1) > input:nth-child(2)")
+    public WebElement buttonAddServicesList;
+
+    public Integer selectRandomAddService(int numberOfAddOns){
+
+        List<WebElement> inputNumberAddOnsList = driver.findElements(inputNumberAddOnsLocator);
+        List<WebElement> inputNumberAddOnsListTemp = inputNumberAddOnsList;
+        List<WebElement> pricesAddOns = driver.findElements(pricesAddOnsLocator);
+        List<String> pricesList = getElementsText(pricesAddOns); // 15.00 EUR x
+
+        int range = inputNumberAddOnsList.size();
+        int temp = range;
+        System.out.println("range = " + range);
+
+        // selects add-ons
+        int totalExtraServices = 0;
+        int index;
+        for (int i = 0; i < numberOfAddOns; i++) {
+            index = generateRandomNumber(temp);
+
+            WebElement input = inputNumberAddOnsListTemp.get(index);
+            input.sendKeys("1");
+            String s = pricesList.get(index);
+            if(pricesList.get(index).length() > 12){
+                s = s.substring(13,15).trim();
+                int price = Integer.parseInt(s);
+                int nOn = new DashboardPage().getNoOfNights();
+                totalExtraServices += price * nOn;
+            }
+            else {
+                s = s.substring(0,2).replace(".", "").trim();
+                int price = Integer.parseInt(s);
+                totalExtraServices += price;
+            }
+            inputNumberAddOnsListTemp.remove(inputNumberAddOnsListTemp.get(index));
+            temp--;
+        }
+
+        return totalExtraServices;
+    }
+
+
+    public void clickAddServices(){
+        waitFor(1);
+        buttonAddServicesList.click();
+    }
+
+
+}

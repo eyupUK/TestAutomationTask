@@ -1,0 +1,15 @@
+/Users/eyuptozcu/UIAutomationTask/src/test/java/com/automation/pages/AddOnsPage.java
+/Users/eyuptozcu/UIAutomationTask/src/test/java/com/automation/pages/DashboardPage.java
+/Users/eyuptozcu/UIAutomationTask/src/test/java/com/automation/utilities/BrowserUtils.java
+/Users/eyuptozcu/UIAutomationTask/src/test/java/com/automation/pages/RoomTypesPage.java
+/Users/eyuptozcu/UIAutomationTask/src/test/java/com/automation/pages/BasePage.java
+/Users/eyuptozcu/UIAutomationTask/src/test/java/com/automation/step_defs/BookRoomStepDefs.java
+/Users/eyuptozcu/UIAutomationTask/src/test/java/com/automation/utilities/ConfigurationReader.java
+/Users/eyuptozcu/UIAutomationTask/src/test/java/com/automation/utilities/Utility.java
+/Users/eyuptozcu/UIAutomationTask/src/test/java/com/automation/step_defs/Hooks.java
+/Users/eyuptozcu/UIAutomationTask/src/test/java/com/automation/utilities/Driver.java
+/Users/eyuptozcu/UIAutomationTask/src/test/java/com/automation/pages/CreateBookingPage.java
+/Users/eyuptozcu/UIAutomationTask/src/test/java/com/automation/pages/BookingCompletedPage.java
+/Users/eyuptozcu/UIAutomationTask/src/test/java/com/automation/runners/FailedTestRunner.java
+/Users/eyuptozcu/UIAutomationTask/src/test/java/com/automation/runners/CukesRunner.java
+/Users/eyuptozcu/UIAutomationTask/src/test/java/com/automation/pages/PaymentPage.java
