@@ -98,7 +98,6 @@ public class RoomTypesPage extends BasePage{
             catch(NumberFormatException ex){
                 ex.printStackTrace();
             }
-            System.out.println("price = " + price);
             if (price > highest) {
                 highest = price;
                 index = listStr.indexOf(s);

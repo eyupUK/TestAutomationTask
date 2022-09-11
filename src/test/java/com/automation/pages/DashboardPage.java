@@ -63,7 +63,6 @@ public class DashboardPage extends BasePage{
         waitFor(1);
         WebElement button = driver.findElement(By.xpath(dynamicXPath));
         button.click();
-        System.out.println("button clicked");
 
     }
 }
