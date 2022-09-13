@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.automation.utilities.BrowserUtils.getElementsText;
@@ -16,6 +17,7 @@ import static com.automation.utilities.BrowserUtils.waitFor;
 public class RoomTypesPage extends BasePage{
 
     WebDriver driver = Driver.get();
+
 
     @FindBy(xpath = "//div[@class='h2 text-center']")
     public WebElement selectedDate;
@@ -40,60 +42,71 @@ public class RoomTypesPage extends BasePage{
     @FindBy(xpath = "//tr/td[1]/h4")
     public List<WebElement> rateTextList;
 
+    //@CacheLookup
+    @FindBy(css = ".col-md-12")
+    public List<WebElement> roomTypeOptions;
+
+
+
 
     public static String date;
 
 
     // scrolls down to display a specific element
     // if it could NOT find the element, then finds new valid date and selects it, then goes to the element
-    public String scrollDownToThe(String elementText){
-        try{
-            driver.switchTo().frame(0);
-        }
-        catch(Exception exe){
-
-        }
+    public String find(String elementText){
         waitFor(1);
         String dynamicXPath = "//h2[contains(text(),'"+elementText+"')]";
         By roomTypeTextLocator = By.xpath(dynamicXPath);
-        try{
+        try {
+            driver.switchTo().frame(0);
             WebElement textDeluxeApartment = driver.findElement(roomTypeTextLocator);
             JavascriptExecutor js = (JavascriptExecutor) driver;
             js.executeScript("arguments[0].scrollIntoView();", textDeluxeApartment);
         }
-        catch(Exception e){
-            try{
-                driver.findElement(By.xpath("//a[@class='text-center']")).click();  //   // //a[contains(text(),'Check availability calendar')]
-            }
-            catch(Exception exc){}
+        catch(Exception e) {
+            driver.findElement(By.xpath("//a[@class='text-center']")).click();  //   // //a[contains(text(),'Check availability calendar')]
             waitFor(1);
-            List<WebElement> deluxeTimeBoxesList = driver.findElements(By.xpath("//div[2]/div/div/div[@class='list-group']/a[2]/b"));
-            List<String> list = getElementsText(deluxeTimeBoxesList);
-            for (int i = 0; i < 9; i++){
-                int count = 0;
-                for (int j = 0; j < 4; j++){
-                    if(!list.get(i+j).equals("")){
-                        count++;
-                    }
-                }
-
-                if (count == 4){
-                    deluxeTimeBoxesList.get(i).click();
-                    break;
-                }
-            }
-            waitFor(1);
-
-            try{
-                buttonSearch.click();
-            }
-            catch (Exception ex){
-                buttonNext12Days.click();
-                waitFor(1);
-                scrollDownToThe(elementText);
-            }
+            findAvailableDate();
         }
         return elementText;
+    }
+
+    public void findAvailableDate(){
+        List<WebElement> deluxeTimeBoxesList = driver.findElements(By.xpath("//div[2]/div/div/div[@class='list-group']/a[2]/b"));
+        List<String> list = getElementsText(deluxeTimeBoxesList);
+        boolean clickSearchButton = false;
+        for (int i = 0; i < 9; i++){
+            int count = 0;
+            for (int j = 0; j < 4; j++){
+                if(!list.get(i+j).equals("")){
+                    count++;
+                }
+            }
+
+            if (count == 2) {
+                i += 1;
+            }
+
+            else if (count == 3) {
+                i += 2;
+            }
+
+            else if (count == 4){
+                deluxeTimeBoxesList.get(i).click();
+                clickSearchButton = true;
+                break;
+            }
+        }
+        if (clickSearchButton) {
+            buttonSearch.click();
+        }
+        else{
+            buttonNext12Days.click();
+            waitFor(1);
+            findAvailableDate();
+        }
+
     }
 
     public String selectHighestPrice(){

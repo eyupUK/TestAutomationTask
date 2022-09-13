@@ -65,9 +65,9 @@ public class BookRoomStepDefs {
         }
     }
 
-    @When("scroll down to the {string}")
-    public void scroll_down_to_the(String elementText) {
-        expectedRoomType = roomTypesPage.scrollDownToThe(elementText);
+    @When("find {string}")
+    public void find(String elementText) {
+        expectedRoomType = roomTypesPage.find(elementText);
         waitFor(1);
     }
 

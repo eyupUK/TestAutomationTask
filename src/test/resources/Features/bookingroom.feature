@@ -6,7 +6,7 @@ Feature: Booking a deluxe room
     And select any valid date
     And select "4" nights
     When click "Book now !" button
-    And scroll down to the "Deluxe Appartment"
+    And find "Deluxe Appartment"
     And select the most expensive package
     And select any 2 add ons
     When click "Add the selected services >>" button
