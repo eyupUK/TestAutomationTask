@@ -27,8 +27,6 @@ public class BookingCompletedPage extends BasePage{
 
 
     public String getSuccessMessage(){
-        // captures the success message only and saves into the captures folder
-        captureSuccessMessage(wholeMessage);
 
         scrollToElement(successMessage);
         highlight(successMessage);
@@ -38,45 +36,4 @@ public class BookingCompletedPage extends BasePage{
         return successMessage.getText();
     }
 
-
-    public void captureSuccessMessage(WebElement targetElement)
-    {
-        File screenshot = ((TakesScreenshot)Driver.get()).getScreenshotAs(OutputType.FILE);
-        BufferedImage fullImg = null;
-        try {
-            fullImg = ImageIO.read(screenshot);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Get the location of element on the page
-        Point point = targetElement.getLocation();
-
-        // Get width and height of the element
-        int eleWidth = targetElement.getSize().getWidth();
-        int eleHeight = targetElement.getSize().getHeight();
-
-
-        // Crop the entire page screenshot to get only element screenshot
-        BufferedImage eleScreenshot = fullImg.getSubimage(point.getX(), (int)(point.getY()*3.4), eleWidth, eleHeight);
-        try {
-            ImageIO.write(eleScreenshot, "png", screenshot);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // names screenshot
-        LocalDateTime myDateObj = LocalDateTime.now();
-        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        String formattedDate = myDateObj.format(myFormatObj);
-        formattedDate = formattedDate.replace("-","_").replace(" ", "_").replace(":","_");
-
-        String tagNameOfTargetElement = targetElement.getTagName();
-        // Copy the element screenshot to disk
-        try {
-            FileUtils.copyFile(screenshot, new File("captures/"+ tagNameOfTargetElement +"_"+ formattedDate + ".jpeg"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
