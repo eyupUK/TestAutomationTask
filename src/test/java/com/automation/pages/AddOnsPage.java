@@ -1,13 +1,9 @@
 package com.automation.pages;
 
 import com.automation.utilities.Driver;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+
 
 import java.util.List;
 
@@ -17,7 +13,7 @@ import static com.automation.utilities.BrowserUtils.*;
 public class AddOnsPage extends BasePage{
 
     WebDriver driver = Driver.get();
-
+    JavascriptExecutor js = (JavascriptExecutor) driver;
 
     public By inputNumberAddOnsLocator = By.xpath("//input[@type='number']");
     public By pricesAddOnsLocator = By.xpath("//input[@type='number']//parent::div/preceding-sibling::div[1]");
@@ -28,10 +24,12 @@ public class AddOnsPage extends BasePage{
     @FindBy(css = "body > div:nth-child(1) > form:nth-child(7) > div:nth-child(21) > div:nth-child(1) > span:nth-child(1) > input:nth-child(2)")
     public WebElement buttonAddServicesList;
 
+
     public Integer selectRandomAddService(int numberOfAddOns){
 
+        waitForPageToLoad(10);
+
         List<WebElement> inputNumberAddOnsList = driver.findElements(inputNumberAddOnsLocator);
-        List<WebElement> inputNumberAddOnsListTemp = inputNumberAddOnsList;
         List<WebElement> pricesAddOns = driver.findElements(pricesAddOnsLocator);
         List<String> pricesList = getElementsText(pricesAddOns); // 15.00 EUR x
 
@@ -43,8 +41,8 @@ public class AddOnsPage extends BasePage{
         int index;
         for (int i = 0; i < numberOfAddOns; i++) {
             index = generateRandomNumber(temp);
-
-            WebElement input = inputNumberAddOnsListTemp.get(index);
+            WebElement input = inputNumberAddOnsList.get(index);
+            scrollToElement(input);
             input.sendKeys("1");
             String s = pricesList.get(index);
             if(pricesList.get(index).length() > 12){
@@ -58,7 +56,7 @@ public class AddOnsPage extends BasePage{
                 int price = Integer.parseInt(s);
                 totalExtraServices += price;
             }
-            inputNumberAddOnsListTemp.remove(inputNumberAddOnsListTemp.get(index));
+            inputNumberAddOnsList.remove(inputNumberAddOnsList.get(index));
             temp--;
         }
 
@@ -67,7 +65,8 @@ public class AddOnsPage extends BasePage{
 
 
     public void clickAddServices(){
-        waitFor(1);
+        waitForClickablility(buttonAddServicesList, 10);
+        scrollToElement(buttonAddServicesList);
         buttonAddServicesList.click();
     }
 

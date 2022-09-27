@@ -7,14 +7,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
+
 import java.util.List;
 
-import static com.automation.utilities.BrowserUtils.waitFor;
+import static com.automation.utilities.BrowserUtils.*;
 
 
 public class DashboardPage extends BasePage{
 
     WebDriver driver = Driver.get();
+
 
     @FindBy(xpath = "//td[@class='day']")
     public List<WebElement> validTimeBoxes;
@@ -35,13 +37,14 @@ public class DashboardPage extends BasePage{
     public static int numberOfNights;
 
     public void clickTimebox() {
+        waitForPageToLoad(10);
+        waitForVisibility(inputDate, 10);
         inputDate.click();
-        waitFor(1);
         int range = validTimeBoxes.size();
         int index = (int) (Math.random() * range);
         date = validTimeBoxes.get(index).getText();
+        waitForVisibility(validTimeBoxes.get(index), 10);
         validTimeBoxes.get(index).click();
-        waitFor(1);
         date += " " + nameMonth.getText();
     }
 
@@ -60,9 +63,7 @@ public class DashboardPage extends BasePage{
 
     public void clickButton(String buttonText){
         String dynamicXPath = "//input[@value='" + buttonText + "']";
-        waitFor(1);
         WebElement button = driver.findElement(By.xpath(dynamicXPath));
         button.click();
-
     }
 }

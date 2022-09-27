@@ -68,6 +68,9 @@ To run specific feature if you have multiple feature files use, mvn test -Dcucum
 
 Once you run your tests, the framework generates the various types of reports taking screenshots of failures and errors automatically. This framework selenium-cucumber-java uses several different types of test reporters to communicate pass/failure.
 
+Cucumber reports are automatically generated after the execution. To generate allure report, type in the terminal: allure generate --clean OR to view on the default browser immediately: allure serve
+
+
 ##Cucumber Report:
 
 ![](screenshots/Screenshot 2022-09-11 at 05.33.40.png)
@@ -80,6 +83,82 @@ Once you run your tests, the framework generates the various types of reports ta
 
 ![](screenshots/Screenshot 2022-09-11 at 05.39.05.png)
 
+## Allure Report commands and options:
+
+###Usage: allure [options]
+
+Options:
+
+--help    (Print commandline help.)
+
+-q, --quiet   (Switch on the quiet mode.)
+
+Default: false
+
+-v, --verbose   (Switch on the verbose mode.)
+
+Default: false
+
+--version   (Print commandline version.)
+
+Default: false
+
+
+###Usage: generate [options]
+
+Options:
+
+-c, --clean     (Clean Allure report directory before generating a new one.)
+
+Default: false
+
+--config     (Allure commandline config path. If specified overrides values from)
+
+--profile and --configDirectory --configDirectory      (Allure commandline configurations dire ctory. By default uses ALLURE_HOME directory.)
+
+--profile    (Allure commandline configuration profile.)
+
+-o, --report-dir, --output    (The directory to generate Allure report into.)
+
+Default: allure-report
+
+###Usage: serve [options]
+      Usage: serve [options] The directories with allure results
+        Options:
+          --config
+            Allure commandline config path. If specified overrides values from 
+            --profile and --configDirectory.
+          --configDirectory
+            Allure commandline configurations directory. By default uses 
+            ALLURE_HOME directory.
+          -h, --host
+            This host will be used to start web server for the report.
+          -p, --port
+            This port will be used to start web server for the report.
+            Default: 0
+          --profile
+            Allure commandline configuration profile.
+
+###Usage: open [options]
+      Usage: open [options] The report directory
+        Options:
+          -h, --host
+            This host will be used to start web server for the report.
+          -p, --port
+            This port will be used to start web server for the report.
+            Default: 0
+
+    plugin      Generate the report
+###Usage: plugin [options]
+        Options:
+          --config
+            Allure commandline config path. If specified overrides values from 
+            --profile and --configDirectory.
+          --configDirectory
+            Allure commandline configurations directory. By default uses 
+            ALLURE_HOME directory.
+          --profile
+            Allure commandline configuration profile.
 
 
 Developed automation scripts using the BDD approach

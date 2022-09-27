@@ -2,15 +2,12 @@ package com.automation.pages;
 
 import com.automation.utilities.Driver;
 import com.github.javafaker.Faker;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-import static com.automation.utilities.BrowserUtils.waitFor;
+import static com.automation.utilities.BrowserUtils.*;
 
 public class CreateBookingPage extends BasePage{
 
@@ -27,25 +24,21 @@ public class CreateBookingPage extends BasePage{
     public List<WebElement> bookingDetails;
 
 
-
+    public void setContactInfo(){
+        inputEmail.sendKeys(faker.internet().emailAddress(), Keys.TAB, faker.name().lastName(), Keys.TAB, faker.name().firstName(), Keys.TAB, faker.phoneNumber().cellPhone());
+    }
 
     // generates and returns a WebElement dynamically
     public String selectPaymentMethod(String paymentMethod){
         String xpath = "//input[contains(@title,'" + paymentMethod + "')]";
         WebElement buttonPaymentMethod = driver.findElement(By.xpath(xpath));
-        waitFor(1);
         buttonPaymentMethod.click();
         return paymentMethod;
     }
 
-    public void setContactInfo(){
-        waitFor(1);
-        inputEmail.sendKeys(faker.internet().emailAddress(), Keys.TAB, faker.name().lastName(), Keys.TAB, faker.name().firstName(), Keys.TAB, faker.phoneNumber().cellPhone());
-    }
-
-
-
     public String getDate() {
+        waitForPageToLoad(10);
+        waitForVisibility(bookingDetails.get(0), 10);
         return bookingDetails.get(0).getText();
     }
 

@@ -1,6 +1,6 @@
 Feature: Booking a deluxe room
 
-
+  @DeluxeRoom
   Scenario: User is able to book a most expensive room under Deluxe Apartment
     Given go to home page
     And select any valid date

@@ -8,8 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 
-
-import static com.automation.utilities.BrowserUtils.waitFor;
+import static com.automation.utilities.BrowserUtils.*;
 
 public class PaymentPage extends BasePage{
 
@@ -40,14 +39,13 @@ public class PaymentPage extends BasePage{
 
     //
     public void setCardInfo(){
+        waitForPageToLoad(10);
+        waitForVisibility(cardNumber,10);
         cardNumber.sendKeys(creditCardNumberVisa);
-        waitFor(1);
         Select select = new Select(cardBrand);
         select.getOptions().get(1).click();
-        waitFor(1);
         select = new Select(expireMonth);
         select.getOptions().get(2).click();
-        waitFor(1);
         select = new Select(expireYear);
         select.getOptions().get(2).click();
 
@@ -57,10 +55,9 @@ public class PaymentPage extends BasePage{
     //
     public void setAddressInfo(){
         billingAddress.sendKeys(faker.address().buildingNumber() + " " + faker.address().streetAddress(), Keys.TAB, faker.address().zipCode(), Keys.TAB, faker.address().city(), Keys.TAB, faker.address().state());
-        waitFor(1);
+
         Select select = new Select(country);
         select.selectByVisibleText("United States");
-        waitFor(1);
     }
 
 }

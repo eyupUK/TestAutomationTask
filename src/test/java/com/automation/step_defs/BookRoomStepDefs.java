@@ -7,6 +7,7 @@ import com.github.javafaker.Faker;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.testng.asserts.SoftAssert;
 
@@ -28,6 +29,7 @@ public class BookRoomStepDefs {
 
     String url = ConfigurationReader.get("url");
     WebDriver driver = Driver.get();
+    JavascriptExecutor js = (JavascriptExecutor) driver;
 
     static String expectedDate;
     static String expectedNumberOfNights;
@@ -39,7 +41,6 @@ public class BookRoomStepDefs {
     @Given("go to home page")
     public void go_to_home_page() {
         driver.get(url);
-        waitFor(1);
     }
 
     @Given("select any valid date")
@@ -59,29 +60,28 @@ public class BookRoomStepDefs {
 
         try{
             dashboardPage.clickButton(buttonText);
+            waitFor(1);
         }
         catch(Exception e){
             addOnsPage.clickAddServices();
+            waitFor(1);
         }
     }
 
     @When("find {string}")
     public void find(String elementText) {
         expectedRoomType = roomTypesPage.find(elementText);
-        waitFor(1);
     }
 
     @When("select the most expensive package")
     public void select_the_most_expensive_package() {
         expectedRate = roomTypesPage.selectHighestPrice();
         expectedDate = roomTypesPage.getDate();
-        waitFor(1);
     }
 
     @When("select any {int} add ons")
     public void select_any_add_ons(int numberOfAddOns) {
         expectedExtraServices = addOnsPage.selectRandomAddService(numberOfAddOns);
-        waitFor(1);
     }
 
     @Then("verify all details")
@@ -123,6 +123,7 @@ public class BookRoomStepDefs {
 
     @When("tick agreement policy")
     public void tick_agreement_policy() {
+        js.executeScript("arguments[0].scrollIntoView", createBookingPage.tickIAgree);
         createBookingPage.tickIAgree.click();
         waitFor(1);
     }

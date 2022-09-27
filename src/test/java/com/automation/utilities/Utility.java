@@ -23,7 +23,7 @@ public class Utility {
 
     static WebDriver driver = Driver.get();
 
-    public int generateRandomNumber() {
+    public static int generateRandomNumber() {
         return (int) (Math.random() * 5000 + 1);
 
     }
@@ -44,53 +44,53 @@ public class Utility {
     /**
      * This method will click on element
      */
-    public void clickOnElement(By by) {
+    public static void clickOnElement(By by) {
         WebElement element = driver.findElement(by);
         element.click();
     }
 
-    public void clickOnElement(WebElement element) {
+    public static void clickOnElement(WebElement element) {
         element.click();
     }
 
     /**
      * This method will get text from element
      */
-    public String getTextFromElement(By by) {
+    public static String getTextFromElement(By by) {
         return driver.findElement(by).getText();
     }
 
-    public String getTextFromElement(WebElement element) {
+    public static String getTextFromElement(WebElement element) {
         return element.getText();
     }
 
     /**
      * This method will send text on element
      */
-    public void sendTextToElement(By by, String text) {
+    public static void sendTextToElement(By by, String text) {
         driver.findElement(by).sendKeys(text);
     }
 
-    public void sendTextToElement(WebElement element, String str) {
+    public static void sendTextToElement(WebElement element, String str) {
         element.sendKeys(str);
     }
 
     /**
      * This method will return list of web elements
      */
-    public List<WebElement> webElementList(By by) {
+    public static List<WebElement> webElementList(By by) {
         return driver.findElements(by);
     }
 
     /**
      * This method will clear previous stored data
      */
-    public void clearTextFromField(By by) {
+    public static void clearTextFromField(By by) {
         driver.findElement(by).sendKeys(Keys.CONTROL + "a");
         driver.findElement(by).sendKeys(Keys.DELETE);
     }
 
-    public void sendTabAndEnterKey(By by) {
+    public static void sendTabAndEnterKey(By by) {
         driver.findElement(by).sendKeys(Keys.TAB);
         //driver.findElement(by).sendKeys(Keys.ENTER);
     }
@@ -100,35 +100,35 @@ public class Utility {
     /**
      * This method will switch to alert
      */
-    public void switchToAlert() {
+    public static void switchToAlert() {
         driver.switchTo().alert();
     }
 
     /**
      * This method will accept alert
      */
-    public void acceptAlert() {
+    public static void acceptAlert() {
         driver.switchTo().alert().accept();
     }
 
     /**
      * This method will dismiss alert
      */
-    public void dismissAlert() {
+    public static void dismissAlert() {
         driver.switchTo().alert().dismiss();
     }
 
     /**
      * This method will get text from alert
      */
-    public String getTextFromAlert() {
+    public static String getTextFromAlert() {
         return driver.switchTo().alert().getText();
     }
 
     /**
      * This method will send text from alert
      */
-    public void sendTextToAlert(String text) {
+    public static void sendTextToAlert(String text) {
         driver.switchTo().alert().sendKeys(text);
     }
 
@@ -138,42 +138,42 @@ public class Utility {
     /**
      * This method will select the option by visible text
      */
-    public void selectByVisibleTextFromDropDown(By by, String text) {
+    public static void selectByVisibleTextFromDropDown(By by, String text) {
         WebElement dropDown = driver.findElement(by);
         Select select = new Select(dropDown);
         select.selectByVisibleText(text);
     }
 
-    public void selectByVisibleTextFromDropDown(WebElement element, String text) {
+    public static void selectByVisibleTextFromDropDown(WebElement element, String text) {
         new Select(element).selectByVisibleText(text);
     }
 
     /**
      * This method will select the option by value
      */
-    public void selectByValueFromDropDown(By by, String value) {
+    public static void selectByValueFromDropDown(By by, String value) {
         new Select(driver.findElement(by)).selectByValue(value);
     }
 
-    public void selectByValueFromDropDown(WebElement element, String value) {
+    public static void selectByValueFromDropDown(WebElement element, String value) {
         new Select(element).selectByValue(value);
     }
 
     /**
      * This method will select the option by index
      */
-    public void selectByIndexFromDropDown(By by, int index) {
+    public static void selectByIndexFromDropDown(By by, int index) {
         new Select(driver.findElement(by)).selectByIndex(index);
     }
 
-    public void selectByIndexFromDropDown(WebElement element, int index) {
+    public static void selectByIndexFromDropDown(WebElement element, int index) {
         new Select(element).selectByIndex(index);
     }
 
     /**
      * This method will select the option by contains text
      */
-    public void selectByContainsTextFromDropDown(By by, String text) {
+    public static void selectByContainsTextFromDropDown(By by, String text) {
         List<WebElement> allOptions = new Select(driver.findElement(by)).getOptions();
         for (WebElement options : allOptions) {
             if (options.getText().contains(text)) {
@@ -187,7 +187,7 @@ public class Utility {
     /**
      * This method will close all windows
      */
-    public void closeAllWindows(List<String> hList, String parentWindow) {
+    public static void closeAllWindows(List<String> hList, String parentWindow) {
         for (String str : hList) {
             if (!str.equals(parentWindow)) {
                 driver.switchTo().window(str).close();
@@ -198,14 +198,14 @@ public class Utility {
     /**
      * This method will switch to parent window
      */
-    public void switchToParentWindow(String parentWindowId) {
+    public static void switchToParentWindow(String parentWindowId) {
         driver.switchTo().window(parentWindowId);
     }
 
     /**
      * This method will find that we switch to right window
      */
-    public boolean switchToRightWindow(String windowTitle, List<String> hList) {
+    public static boolean switchToRightWindow(String windowTitle, List<String> hList) {
         for (String str : hList) {
             String title = driver.switchTo().window(str).getTitle();
             if (title.contains(windowTitle)) {
@@ -220,12 +220,12 @@ public class Utility {
     /**
      * This method will use to hover mouse on element
      */
-    public void mouseHoverToElement(By by) {
+    public static void mouseHoverToElement(By by) {
         Actions actions = new Actions(driver);
         actions.moveToElement(driver.findElement(by)).build().perform();
     }
 
-    public void mouseHoverToElement(WebElement element) {
+    public static void mouseHoverToElement(WebElement element) {
         Actions actions = new Actions(driver);
         actions.moveToElement(element).perform();
     }
@@ -233,12 +233,12 @@ public class Utility {
     /**
      * This method will use to hover mouse on element and click
      */
-    public void mouseHoverToElementAndClick(By by) {
+    public static void mouseHoverToElementAndClick(By by) {
         Actions actions = new Actions(driver);
         actions.moveToElement(driver.findElement(by)).click().perform();
     }
 
-    public void mouseHoverToElementAndClick(WebElement element) {
+    public static void mouseHoverToElementAndClick(WebElement element) {
         Actions actions = new Actions(driver);
         actions.moveToElement(element).click().perform();
     }
@@ -248,12 +248,12 @@ public class Utility {
     /**
      * This method will use to wait until  VisibilityOfElementLocated
      */
-    public WebElement waitUntilVisibilityOfElementLocated(By by, int time) {
+    public static WebElement waitUntilVisibilityOfElementLocated(By by, int time) {
         WebDriverWait wait = new WebDriverWait(driver,2000);
         return wait.until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
-    public WebElement waitForElementWithFluentWait(By by, int time, int pollingTime) {
+    public static WebElement waitForElementWithFluentWait(By by, int time, int pollingTime) {
         Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
                 .withTimeout(Duration.ofSeconds(time))
                 .pollingEvery(Duration.ofSeconds(pollingTime))
@@ -308,10 +308,10 @@ public class Utility {
      *Screenshot methods
      */
     public static String takeScreenShot(String fileName) {
-        String filePath = System.getProperty("user.dir") + "/test-output/html/";
+        String filePath = System.getProperty("user.dir") + "/test-output/screenshot/";
         TakesScreenshot screenshot = (TakesScreenshot) driver;
         File scr1 = screenshot.getScreenshotAs(OutputType.FILE);
-        String imageName = fileName + currentTimeStamp() + ".jpg";
+        String imageName = fileName +"_"+ currentTimeStamp() + ".jpg";
         String destination = filePath + imageName;
         try {
             FileUtils.copyFile(scr1, new File(destination));

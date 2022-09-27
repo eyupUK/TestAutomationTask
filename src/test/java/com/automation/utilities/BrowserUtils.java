@@ -53,10 +53,12 @@ public class BrowserUtils {
         LocalDateTime myDateObj = LocalDateTime.now();
         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         String formattedDate = myDateObj.format(myFormatObj);
+        formattedDate = formattedDate.replace("-","_").replace(" ", "_").replace(":","_");
 
+        String tagNameOfTargetElement = targetElement.getTagName();
         // Copy the element screenshot to disk
         try {
-            FileUtils.copyFile(screenshot, new File("screenshots/"+ formattedDate + "_test.jpeg"));
+            FileUtils.copyFile(screenshot, new File("captures/"+ tagNameOfTargetElement +"_"+ formattedDate + ".jpeg"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -330,7 +332,7 @@ public class BrowserUtils {
     }
 
     /**
-     * Highlighs an element by changing its background and border color
+     * Highlights an element by changing its background and border color
      * @param element
      */
     public static void highlight(WebElement element) {
