@@ -1,15 +1,19 @@
 package com.automation.pages;
 
+import com.automation.utilities.BrowserUtils;
 import com.automation.utilities.Driver;
 import org.openqa.selenium.By;
-
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
+
+
 import java.util.List;
 
-import static com.automation.utilities.BrowserUtils.*;
+import static com.automation.utilities.BrowserUtils.getElementsText;
+import static com.automation.utilities.BrowserUtils.waitFor;
 
 public class RoomTypesPage extends BasePage{
 
@@ -43,25 +47,38 @@ public class RoomTypesPage extends BasePage{
     @FindBy(css = ".col-md-12")
     public List<WebElement> roomTypeOptions;
 
+    @FindBy(xpath = "/html/body/div[1]/div[4]/div/div[1]/div/h2")
+    public List<WebElement> titleOfRoomTypes;
+
+
     public static String date;
+
 
     // scrolls down to display a specific element
     // if it could NOT find the element, then finds new valid date and selects it, then goes to the element
     public String find(String elementText){
-        waitForPageToLoad(10);
+        waitFor(1);
         String dynamicXPath = "//h2[contains(text(),'"+elementText+"')]";
         By roomTypeTextLocator = By.xpath(dynamicXPath);
-        try {
+
+        if (driver.findElements(By.tagName("iframe")).size() > 0) {
             driver.switchTo().frame(0);
-            WebElement textDeluxeApartment = driver.findElement(roomTypeTextLocator);
-            scrollToElement(textDeluxeApartment);
         }
-        catch(Exception e) {
-            WebElement checkAvailability = driver.findElement(By.xpath("//a[@class='text-center']"));  //   // //a[contains(text(),'Check availability calendar')]
-            waitForVisibility(checkAvailability, 10);
-            scrollToElement(checkAvailability);
-            checkAvailability.click();
+        List<String> roomTypes = getElementsText(titleOfRoomTypes);
+        System.out.println(roomTypes);
+        boolean found = false;
+        for (String roomType : roomTypes) {
+            if (roomType.contains("Deluxe")){found=true;}
+        }
+        if (!found){
+            driver.findElement(By.xpath("//a[@class='text-center']")).click();  //   // //a[contains(text(),'Check availability calendar')]
+            waitFor(1);
             findAvailableDate();
+        }
+        else {
+            WebElement textDeluxeApartment = driver.findElement(roomTypeTextLocator);
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("arguments[0].scrollIntoView();", textDeluxeApartment);
         }
         return elementText;
     }
@@ -87,13 +104,12 @@ public class RoomTypesPage extends BasePage{
             }
 
             else if (count == 4){
-                clickSearchButton = true;
                 deluxeTimeBoxesList.get(i).click();
+                clickSearchButton = true;
                 break;
             }
         }
         if (clickSearchButton) {
-            waitForPageToLoad(10);
             buttonSearch.click();
         }
         else{
@@ -105,8 +121,8 @@ public class RoomTypesPage extends BasePage{
     }
 
     public String selectHighestPrice(){
-        waitForPageToLoad(10);
         setDate();
+        waitFor(1);
         List<WebElement> listPricesOfDeluxe = listPricesOfDeluxeApartment;
         List<String> listStr = getElementsText(listPricesOfDeluxe);
         int highest = 0;
@@ -132,7 +148,7 @@ public class RoomTypesPage extends BasePage{
         String rate = rateTextList.get(index).getText();
         String[] arrRate = rate.split(" ");
         rate = arrRate[0];
-        waitForVisibility(listSelectButtons.get(index), 10);
+        waitFor(1);
         listSelectButtons.get(index).click();
         return rate;
     }
