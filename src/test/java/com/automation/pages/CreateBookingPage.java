@@ -1,5 +1,6 @@
 package com.automation.pages;
 
+import com.automation.step_defs.Hooks;
 import com.automation.utilities.Driver;
 import com.github.javafaker.Faker;
 import org.openqa.selenium.*;
@@ -12,7 +13,7 @@ import static com.automation.utilities.BrowserUtils.*;
 public class CreateBookingPage extends BasePage{
 
     Faker faker = new Faker();
-    WebDriver driver = Driver.get();
+    WebDriver driver = Hooks.getDriver();
 
     @FindBy(css = "#booking_guest_attributes_e_mail")
     public WebElement inputEmail;

@@ -1,5 +1,6 @@
 package com.automation.pages;
 
+import com.automation.step_defs.Hooks;
 import com.automation.utilities.Driver;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
@@ -17,7 +18,7 @@ import static com.automation.utilities.Utility.takeScreenShot;
 
 public class BookingCompletedPage extends BasePage{
 
-    WebDriver driver = Driver.get();
+    WebDriver driver = Hooks.getDriver();
 
     @FindBy(xpath = "//*[@id=\"top_position_container\"]/div[2]/h1")
     public WebElement successMessage;

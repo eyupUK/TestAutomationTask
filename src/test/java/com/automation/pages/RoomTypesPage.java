@@ -1,5 +1,6 @@
 package com.automation.pages;
 
+import com.automation.step_defs.Hooks;
 import com.automation.utilities.BrowserUtils;
 import com.automation.utilities.Driver;
 import org.openqa.selenium.By;
@@ -17,7 +18,7 @@ import static com.automation.utilities.BrowserUtils.waitFor;
 
 public class RoomTypesPage extends BasePage{
 
-    WebDriver driver = Driver.get();
+    WebDriver driver = Hooks.getDriver();
 
 
     @FindBy(xpath = "//div[@class='h2 text-center']")

@@ -1,5 +1,6 @@
 package com.automation.pages;
 
+import com.automation.step_defs.Hooks;
 import com.automation.utilities.Driver;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
@@ -12,7 +13,7 @@ import static com.automation.utilities.BrowserUtils.*;
 
 public class AddOnsPage extends BasePage{
 
-    WebDriver driver = Driver.get();
+    WebDriver driver = Hooks.getDriver();
     JavascriptExecutor js = (JavascriptExecutor) driver;
 
     public By inputNumberAddOnsLocator = By.xpath("//input[@type='number']");

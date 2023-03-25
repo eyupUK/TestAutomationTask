@@ -49,7 +49,6 @@ public class PaymentPage extends BasePage{
         select = new Select(expireYear);
         select.getOptions().get(2).click();
 
-
     }
 
     //

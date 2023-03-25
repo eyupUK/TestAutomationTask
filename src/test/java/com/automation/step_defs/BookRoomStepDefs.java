@@ -28,7 +28,7 @@ public class BookRoomStepDefs {
     BookingCompletedPage bookingCompletedPage = new BookingCompletedPage();
 
     String url = ConfigurationReader.get("url");
-    WebDriver driver = Driver.get();
+    WebDriver driver = Hooks.getDriver();
     JavascriptExecutor js = (JavascriptExecutor) driver;
 
     static String expectedDate;

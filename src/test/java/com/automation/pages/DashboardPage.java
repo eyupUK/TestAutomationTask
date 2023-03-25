@@ -1,5 +1,6 @@
 package com.automation.pages;
 
+import com.automation.step_defs.Hooks;
 import com.automation.utilities.Driver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -15,7 +16,7 @@ import static com.automation.utilities.BrowserUtils.*;
 
 public class DashboardPage extends BasePage{
 
-    WebDriver driver = Driver.get();
+    WebDriver driver = Hooks.getDriver();
 
 
     @FindBy(xpath = "//td[@class='day']")
